@@ -2,7 +2,8 @@
   <div :class="{'page-builder':true,'edit':editPage}">
     <div class="component-wrapper" v-for="component in componentStructure(gui)">
       <v-toolbar color="transparent" density="compact" dense v-if="editPage">
-        <v-toolbar-title style="font-size:1em;"> {{ componentTypes[component.type].label }}</v-toolbar-title>
+        <v-toolbar-title style="font-size:1em; color:grey"> {{ componentTypes[component.type].label }}</v-toolbar-title>
+        <component-form :componentModel="component" :gui="gui"></component-form>
         <v-btn icon="mdi-delete" size="small" @click="removeComponentClick(component.id)" flat></v-btn>
         <v-btn icon="mdi-chevron-up" size="small" @click="moveComponentUpClick(component.id)" flat></v-btn>
         <v-btn icon="mdi-chevron-down" size="small" @click="moveComponentDownClick(component.id)" flat></v-btn>
@@ -12,8 +13,7 @@
           v-bind="component.props">
       </component>
     </div>
-
-    <add-component-form v-if="editPage" :gui="gui"></add-component-form>
+    <component-form v-if="editPage" :gui="gui"></component-form>
   </div>
 </template>
 
@@ -21,7 +21,7 @@
 import {markRaw} from "vue";
 import {store} from "@/store";
 import {pageBuilderModule} from "@/components/PageBuilder/PageBuilderModule";
-import AddComponentForm from "@/components/PageBuilder/basic/AddComponentForm";
+import ComponentForm  from "@/components/PageBuilder/ComponentForm";
 import PersonCard from "@/components/PersonCard";
 import IncomeGraph from "@/components/IncomeGraph";
 import {mapGetters, mapMutations, mapState} from "vuex";
@@ -30,7 +30,7 @@ import PageBuilderToolbar from "@/components/PageBuilder/basic/PageBuilderToolba
 
 export default {
   name: "PageBuilder",
-  components: markRaw({PersonCard, AddComponentForm, IncomeGraph, DataTable,PageBuilderToolbar}),
+  components: markRaw({PersonCard, ComponentForm, IncomeGraph, DataTable,PageBuilderToolbar}),
   props: {
     gui: String
   },

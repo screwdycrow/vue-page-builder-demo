@@ -48,7 +48,8 @@
           </v-form>
         </v-card-text>
         <v-card-actions>
-          <v-btn :disabled="!valid || !component.type" @click="addComponentClick()"> ΠΡΟΣΘΗΚΗ</v-btn>
+          <v-btn v-if="!isEditMode" :disabled="!valid || !component.type" @click="addComponentClick()"> ΠΡΟΣΘΗΚΗ</v-btn>
+          <v-btn v-else :disabled="!valid || !component.type" @click="addComponentClick()"> ΠΡΟΣΘΗΚΗ</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -59,19 +60,24 @@
 import {mapGetters, mapMutations} from "vuex";
 
 export default {
-  name: "AddComponentForm",
+  name: "ComponentForm",
   data: () => ({
     dialog: false,
     valid: true,
+
     component: {
       type: null,
       props: null,
     }
   }),
   created() {
+    if (this.isEditMode) {
+      this.type = this.componentModel.type;
+    }
   },
   props: {
-    gui: {type: String, required: true, default: null}
+    gui: {type: String, required: true, default: null},
+    componentModel: {type: Object, required: false, default: null}
   },
   watch: {
     'component.type': function (val) {
@@ -79,6 +85,9 @@ export default {
     }
   },
   computed: {
+    isEditMode() {
+      return this.componentModel !== null
+    },
     selectedComponentProps() {
       if (!this.component.type) return []
       return this.componentTypes[this.component.type].props
@@ -93,30 +102,33 @@ export default {
   methods: {
     ...mapMutations('pageBuilder', [
       'addComponent',
+      "updateComponent"
     ]),
-    validate(){
-      if(this.$refs.componentForm){
+    validate() {
+      if (this.$refs.componentForm) {
         this.$refs.componentForm.validate();
       }
+    },
+    updateComponentClick() {
+      this.updateComponent({gui: this.gui, props: this.component.props, id: this.componentModel.id})
     },
     addComponentClick() {
       this.addComponent({gui: this.gui, type: this.component.type, props: this.component.props})
       this.resetDialog()
     },
-    resetDialog(){
+    resetDialog() {
       this.dialog = false;
       this.component.props = null;
       this.component.type = null;
     },
     componentSelectionChange(value) {
-      console.log(value);
       this.component.props = null
       for (const [key, value] of Object.entries(this.selectedComponentProps)) {
-        if(this.component.props === null ){
+        if (this.component.props === null) {
           this.component.props = {}
-          this.component.props[key] = value.default;
-        }else{
-          this.component.props[key] = value.default;
+          this.component.props[key] = this.isEditMode ? this.componentModel.props[key] : value.default;
+        } else {
+          this.component.props[key] = this.isEditMode ? this.componentModel.props[key] : value.default;
         }
       }
     }

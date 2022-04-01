@@ -129,6 +129,10 @@ export const pageBuilderModule = {
             }
             if (props) component.props = props
             state.guis[gui].push(component)
+        },
+        updateComponent(state,{gui,props,id}){
+            const index = state.guis[gui].findIndex(c => c.id === id)
+            state.guis[gui][index].props = props;
         }
     },
     getters: {
