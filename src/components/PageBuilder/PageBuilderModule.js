@@ -1,6 +1,7 @@
 import PersonCard from "@/components/PersonCard";
 import {markRaw} from "vue";
 import IncomeGraph from "@/components/IncomeGraph";
+import DataTable from "@/components/DataTable";
 
 export const pageBuilderModule = {
     namespaced: true,
@@ -37,11 +38,17 @@ export const pageBuilderModule = {
 
         },
         types: {
+            'DataTable': {
+                component: markRaw(DataTable),
+                label: 'A Datatable ',
+                description: 'Shows rows and items',
+                props: {}
+            },
             'IncomeGraph': {
                 component: markRaw(IncomeGraph),
-                label: 'An Income Grapch ',
+                label: 'An Income Graph ',
                 description: 'Shows details of Income per Branch',
-                props:{}
+                props: {}
             },
             'PersonCard': {
                 component: markRaw(PersonCard),
@@ -62,15 +69,15 @@ export const pageBuilderModule = {
         },
     }),
 
-    actions:{
-      saveGuis({state,commit}){
-          localStorage.setItem('guis',JSON.stringify(state.guis))
-          commit('toggleEditPage')
-      },
-      getGuis({state,commit}){
-          const guis = localStorage.getItem('guis')
-         if(guis) commit('setGuis', JSON.parse(guis))
-      }
+    actions: {
+        saveGuis({state, commit}) {
+            localStorage.setItem('guis', JSON.stringify(state.guis))
+            commit('toggleEditPage')
+        },
+        getGuis({state, commit}) {
+            const guis = localStorage.getItem('guis')
+            if (guis) commit('setGuis', JSON.parse(guis))
+        }
     },
     mutations: {
         initGui(state, gui) {
@@ -78,8 +85,8 @@ export const pageBuilderModule = {
                 state.guis[gui] = []
             }
         },
-        setGuis(state, guis){
-          state.guis = guis
+        setGuis(state, guis) {
+            state.guis = guis
         },
         toggleEditPage(state) {
             state.tempGui = JSON.parse(JSON.stringify(state.guis))
@@ -87,6 +94,10 @@ export const pageBuilderModule = {
         },
         cancelEditPage(state) {
             state.guis = JSON.parse(JSON.stringify(state.tempGuis))
+        },
+        removeComponent(state, {gui, id}) {
+            const index = state.guis[gui].findIndex(c => c.id === id)
+            state.guis[gui].splice(index, 1)
         },
         addComponent(state, {gui, type, props}) {
             const component = {

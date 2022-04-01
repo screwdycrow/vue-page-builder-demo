@@ -5,7 +5,7 @@
     <toggle-edit-page></toggle-edit-page>
     </v-app-bar>
     <v-main>
-      <v-container fluid>
+      <v-container >
         <v-row>
           <v-col lg="4">
             <page-builder gui="home-row-1"></page-builder>
