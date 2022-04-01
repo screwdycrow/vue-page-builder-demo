@@ -1,4 +1,6 @@
-# pagebuilder2
+#Page Builder for Vue 3 
+
+A basic demo for a page builder that exports a json file with the definitions of the view's components and then dynamically loads them.
 
 ## Project setup
 ```
