@@ -1,9 +1,11 @@
 <template>
   <div :class="{'page-builder':true,'edit':editPage}">
     <div class="component-wrapper" v-for="component in componentStructure(gui)">
-      <v-toolbar color="transparent" density="compact" dense v-if="editPage" >
-        <v-toolbar-title> {{componentTypes[component.type].label}} </v-toolbar-title>
+      <v-toolbar color="transparent" density="compact" dense v-if="editPage">
+        <v-toolbar-title style="font-size:1em;"> {{ componentTypes[component.type].label }}</v-toolbar-title>
         <v-btn icon="mdi-delete" size="small" @click="removeComponentClick(component.id)" flat></v-btn>
+        <v-btn icon="mdi-chevron-up" size="small" @click="moveComponentUpClick(component.id)" flat></v-btn>
+        <v-btn icon="mdi-chevron-down" size="small" @click="moveComponentDownClick(component.id)" flat></v-btn>
       </v-toolbar>
       <component
           :is="componentTypes[component.type].component"
@@ -19,15 +21,16 @@
 import {markRaw} from "vue";
 import {store} from "@/store";
 import {pageBuilderModule} from "@/components/PageBuilder/PageBuilderModule";
-import AddComponentForm from "@/components/PageBuilder/AddComponentForm";
+import AddComponentForm from "@/components/PageBuilder/basic/AddComponentForm";
 import PersonCard from "@/components/PersonCard";
 import IncomeGraph from "@/components/IncomeGraph";
 import {mapGetters, mapMutations, mapState} from "vuex";
 import DataTable from "@/components/DataTable";
+import PageBuilderToolbar from "@/components/PageBuilder/basic/PageBuilderToolbar";
 
 export default {
   name: "PageBuilder",
-  components: markRaw({PersonCard, AddComponentForm, IncomeGraph, DataTable}),
+  components: markRaw({PersonCard, AddComponentForm, IncomeGraph, DataTable,PageBuilderToolbar}),
   props: {
     gui: String
   },
@@ -47,7 +50,16 @@ export default {
     removeComponentClick(id) {
       this.removeComponent({gui: this.gui, id: id})
     },
+    moveComponentUpClick(id){
+      this.moveComponentUp({gui:this.gui, id:id})
+    },
+    moveComponentDownClick(id){
+      this.moveComponentDown({gui:this.gui, id:id})
+
+    },
     ...mapMutations('pageBuilder', [
+      "moveComponentUp",
+      "moveComponentDown",
       "removeComponent",
       "initGui"
     ])
@@ -57,10 +69,11 @@ export default {
 
 <style scoped>
 .edit {
-  padding:20px 20px 0px 20px;
+  padding: 20px 20px 0px 20px;
   border: dotted gray 1px;
 
 }
+
 .edit .component-wrapper {
   padding: 10px;
   border: dashed gray 1px;

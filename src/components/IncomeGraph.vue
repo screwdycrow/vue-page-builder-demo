@@ -1,14 +1,19 @@
 <template>
-  <apexchart
+  <div>
 
-      height="200"
-      type="bar"
-      :options="chartOptions"
-      :series="series"
-  ></apexchart>
+    <apexchart
+
+        height="200"
+        type="bar"
+        :options="chartOptions"
+        :series="series"
+    ></apexchart>
+  </div>
+
 </template>
 
 <script>
+
 export default {
   name: "IncomeGraph",
   data: () => ({

@@ -2,6 +2,8 @@ import PersonCard from "@/components/PersonCard";
 import {markRaw} from "vue";
 import IncomeGraph from "@/components/IncomeGraph";
 import DataTable from "@/components/DataTable";
+import {basicProps} from "@/components/PageBuilder/BasicProps";
+import PageBuilderToolbar from "@/components/PageBuilder/basic/PageBuilderToolbar";
 
 export const pageBuilderModule = {
     namespaced: true,
@@ -48,7 +50,15 @@ export const pageBuilderModule = {
                 component: markRaw(IncomeGraph),
                 label: 'An Income Graph ',
                 description: 'Shows details of Income per Branch',
-                props: {}
+                props: {...basicProps}
+            },
+            'PageBuilderToolbar': {
+                component: markRaw(PageBuilderToolbar),
+                label: 'Heading',
+                description:'Heading',
+                props:{
+                    ...basicProps
+                }
             },
             'PersonCard': {
                 component: markRaw(PersonCard),
@@ -56,6 +66,7 @@ export const pageBuilderModule = {
                 description: 'Shows details of a person in your database.',
                 props:
                     {
+                        ...basicProps,
                         name: {
                             type: 'text', label: 'Ονομα', default: 'Enter Name', rules: [
                                 (v) => (v !== '' && v !== null) || 'To όνομα απαιτείται'
@@ -88,16 +99,28 @@ export const pageBuilderModule = {
         setGuis(state, guis) {
             state.guis = guis
         },
+
         toggleEditPage(state) {
-            state.tempGui = JSON.parse(JSON.stringify(state.guis))
+            state.tempGuis = JSON.parse(JSON.stringify(state.guis))
             state.editPage = !state.editPage;
         },
         cancelEditPage(state) {
             state.guis = JSON.parse(JSON.stringify(state.tempGuis))
+            state.editPage = !state.editPage;
         },
         removeComponent(state, {gui, id}) {
             const index = state.guis[gui].findIndex(c => c.id === id)
             state.guis[gui].splice(index, 1)
+        },
+        moveComponentUp(state, {gui, id}) {
+            const index = state.guis[gui].findIndex(c => c.id === id)
+            let component = state.guis[gui].splice(index, 1)[0];
+            state.guis[gui].splice(index - 1, 0, component)
+        },
+        moveComponentDown(state, {gui, id}) {
+            const index = state.guis[gui].findIndex(c => c.id === id)
+            let component = state.guis[gui].splice(index, 1)[0];
+            state.guis[gui].splice(index + 1, 0, component)
         },
         addComponent(state, {gui, type, props}) {
             const component = {

@@ -1,9 +1,12 @@
 <template>
-<v-card :color="color" class="mb-2">
-  <v-card-title>
-    {{name}}
-  </v-card-title>
-</v-card>
+  <div>
+    <v-card :color="color" class="mb-2">
+      <v-card-title>
+        {{name}}
+      </v-card-title>
+    </v-card>
+  </div>
+
 </template>
 
 <script>
