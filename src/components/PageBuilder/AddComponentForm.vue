@@ -1,21 +1,21 @@
 <template>
 
   <div>
-    <v-dialog v-model="dialog" >
+    <v-dialog v-model="dialog">
       <template v-slot:activator="{props}">
         <v-btn
             fab
-            color="primary"
-            dark
+            flat
+            small
             v-bind="props"
             icon="mdi-plus"
         >
         </v-btn>
       </template>
       <v-card width="500px" height="auto">
-        <v-card-title> Προσθήκη Κάρτας </v-card-title>
+        <v-card-title> Προσθήκη Κάρτας</v-card-title>
         <v-card-text>
-          <v-form ref="componentForm" v-model="valid" lazy-validation>
+          <v-form v-if="dialog" ref="componentForm" v-model="valid" lazy-validation>
             <v-select
                 variant="outlined"
                 density="comfortable"
@@ -24,7 +24,7 @@
                 label="Επιλέξτε Κάρτα"
             >
               <template v-slot:item="{item,attrs,on,active}">
-                <v-list-item v-on="on" v-bind="attrs" #default="{active}">
+                <v-list-item>
                   <v-list-item-content>
                     <v-list-item-title>
                       {{ componentTypes[item].title }}
@@ -41,14 +41,14 @@
                           :type="item.type"
                           :label="item.label"
                           :rules="item.rules"
-                          @input="$refs.componentForm.validate"
+                          @focusout="validate()"
                           v-model="component.props[key]">
 
             </v-text-field>
           </v-form>
         </v-card-text>
         <v-card-actions>
-          <v-btn :disabled="!valid"> ΠΡΟΣΘΗΚΗ </v-btn>
+          <v-btn :disabled="!valid || !component.type" @click="addComponentClick()"> ΠΡΟΣΘΗΚΗ</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -56,12 +56,12 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 
 export default {
   name: "AddComponentForm",
   data: () => ({
-    dialog:false,
+    dialog: false,
     valid: true,
     component: {
       type: null,
@@ -69,6 +69,9 @@ export default {
     }
   }),
   created() {
+  },
+  props: {
+    gui: {type: String, required: true, default: null}
   },
   watch: {
     'component.type': function (val) {
@@ -88,11 +91,33 @@ export default {
     ])
   },
   methods: {
+    ...mapMutations('pageBuilder', [
+      'addComponent',
+    ]),
+    validate(){
+      if(this.$refs.componentForm){
+        this.$refs.componentForm.validate();
+      }
+    },
+    addComponentClick() {
+      this.addComponent({gui: this.gui, type: this.component.type, props: this.component.props})
+      this.resetDialog()
+    },
+    resetDialog(){
+      this.dialog = false;
+      this.component.props = null;
+      this.component.type = null;
+    },
     componentSelectionChange(value) {
       console.log(value);
-      this.component.props = {}
+      this.component.props = null
       for (const [key, value] of Object.entries(this.selectedComponentProps)) {
-        this.component.props[key] = value.default;
+        if(this.component.props === null ){
+          this.component.props = {}
+          this.component.props[key] = value.default;
+        }else{
+          this.component.props[key] = value.default;
+        }
       }
     }
   }

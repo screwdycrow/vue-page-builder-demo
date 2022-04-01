@@ -9,15 +9,23 @@
 <script>
 
 import Home from "@/views/Home";
+import {mapActions} from "vuex";
 export default {
   name: 'App',
 
   components: {
     Home
   },
-
   data: () => ({
     //
   }),
+  created() {
+    this.getGuis();
+  },
+  methods:{
+    ...mapActions('pageBuilder',[
+        "getGuis"
+    ])
+  }
 }
 </script>
