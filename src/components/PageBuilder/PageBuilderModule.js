@@ -4,6 +4,7 @@ import IncomeGraph from "@/components/IncomeGraph";
 import DataTable from "@/components/DataTable";
 import {basicProps} from "@/components/PageBuilder/BasicProps";
 import PageBuilderToolbar from "@/components/PageBuilder/basic/PageBuilderToolbar";
+import PageBuilderColumns from "@/components/PageBuilder/basic/PageBuilderColumns";
 
 export const pageBuilderModule = {
     namespaced: true,
@@ -55,9 +56,24 @@ export const pageBuilderModule = {
             'PageBuilderToolbar': {
                 component: markRaw(PageBuilderToolbar),
                 label: 'Heading',
-                description:'Heading',
-                props:{
+                description: 'Heading',
+                props: {
                     ...basicProps
+                }
+            },
+            'PageBuilderColumns': {
+                component: markRaw(PageBuilderColumns),
+                label:'Columns',
+                description:'Generates page builders for  multiple columns',
+                props:{
+                    gui:{
+                        type: 'text', label: 'Ονομα', default: 'row', rules: [
+                            (v) => (v !== '' && v !== null) || 'To όνομα απαιτείται'
+                        ]
+                    },
+                    cols:{type:'number', label:'Στείλες', default:1, rules:[
+                            (v)=>(Number(v)>0 || 'απαιτείτε αριθμός μεγαλύτερος του 0 ')
+                        ]}
                 }
             },
             'PersonCard': {
@@ -130,7 +146,7 @@ export const pageBuilderModule = {
             if (props) component.props = props
             state.guis[gui].push(component)
         },
-        updateComponent(state,{gui,props,id}){
+        updateComponent(state, {gui, props, id}) {
             const index = state.guis[gui].findIndex(c => c.id === id)
             state.guis[gui][index].props = props;
         }

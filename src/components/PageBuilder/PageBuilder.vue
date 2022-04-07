@@ -19,18 +19,17 @@
 
 <script>
 import {markRaw} from "vue";
-import {store} from "@/store";
-import {pageBuilderModule} from "@/components/PageBuilder/PageBuilderModule";
 import ComponentForm  from "@/components/PageBuilder/ComponentForm";
 import PersonCard from "@/components/PersonCard";
 import IncomeGraph from "@/components/IncomeGraph";
 import {mapGetters, mapMutations, mapState} from "vuex";
 import DataTable from "@/components/DataTable";
 import PageBuilderToolbar from "@/components/PageBuilder/basic/PageBuilderToolbar";
+import PageBuilderColumns from "@/components/PageBuilder/basic/PageBuilderColumns";
 
 export default {
   name: "PageBuilder",
-  components: markRaw({PersonCard, ComponentForm, IncomeGraph, DataTable,PageBuilderToolbar}),
+  components: markRaw({PersonCard, ComponentForm, IncomeGraph, DataTable,PageBuilderToolbar, PageBuilderColumns}),
   props: {
     gui: String
   },

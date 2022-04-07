@@ -6,14 +6,7 @@
     </v-app-bar>
     <v-main>
       <v-container >
-        <v-row>
-          <v-col lg="4">
-            <page-builder gui="home-row-1"></page-builder>
-          </v-col>
-          <v-col lg="8">
-            <page-builder gui="home-row-2"></page-builder>
-          </v-col>
-        </v-row>
+        <page-builder gui="home-1"></page-builder>
       </v-container>
     </v-main>
   </v-app>
