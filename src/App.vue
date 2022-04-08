@@ -20,7 +20,6 @@ export default {
     //
   }),
   created() {
-    this.getGuis();
   },
   methods:{
     ...mapActions('pageBuilder',[

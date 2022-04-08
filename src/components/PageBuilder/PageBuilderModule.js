@@ -5,12 +5,15 @@ import DataTable from "@/components/DataTable";
 import {basicProps} from "@/components/PageBuilder/BasicProps";
 import PageBuilderToolbar from "@/components/PageBuilder/basic/PageBuilderToolbar";
 import PageBuilderColumns from "@/components/PageBuilder/basic/PageBuilderColumns";
+import TaskList from "@/components/Tasks/TaskList";
+import AddTask from "@/components/Tasks/AddTask";
 
 export const pageBuilderModule = {
     namespaced: true,
     state: () => ({
         editPage: false,
         tempGuis: {},
+        pageName:'gui',
         guis: {
             'home-row-1': [
                 {
@@ -63,18 +66,33 @@ export const pageBuilderModule = {
             },
             'PageBuilderColumns': {
                 component: markRaw(PageBuilderColumns),
-                label:'Columns',
-                description:'Generates page builders for  multiple columns',
-                props:{
-                    gui:{
+                label: 'Columns',
+                description: 'Generates page builders for  multiple columns',
+                props: {
+                    gui: {
                         type: 'text', label: 'Ονομα', default: 'row', rules: [
                             (v) => (v !== '' && v !== null) || 'To όνομα απαιτείται'
                         ]
                     },
-                    cols:{type:'number', label:'Στείλες', default:1, rules:[
-                            (v)=>(Number(v)>0 || 'απαιτείτε αριθμός μεγαλύτερος του 0 ')
-                        ]}
+                    cols: {
+                        type: 'number', label: 'Στείλες', default: 1, rules: [
+                            (v) => (Number(v) > 0 || 'απαιτείτε αριθμός μεγαλύτερος του 0 ')
+                        ]
+                    }
                 }
+            },
+
+            'TaskList': {
+                component: markRaw(TaskList),
+                label: 'List with Tasks',
+                description: 'Shows your tasks',
+                props: {}
+            },
+            'AddTask': {
+                component: markRaw(AddTask),
+                label: 'Add Task',
+                description: 'Add Task Form',
+                props: {}
             },
             'PersonCard': {
                 component: markRaw(PersonCard),
@@ -97,12 +115,12 @@ export const pageBuilderModule = {
     }),
 
     actions: {
-        saveGuis({state, commit}) {
-            localStorage.setItem('guis', JSON.stringify(state.guis))
+        saveGuis({state, commit},) {
+            localStorage.setItem(state.pageName, JSON.stringify(state.guis))
             commit('toggleEditPage')
         },
-        getGuis({state, commit}) {
-            const guis = localStorage.getItem('guis')
+        getGuis({state, commit},pageName) {
+            const guis = localStorage.getItem(pageName)
             if (guis) commit('setGuis', JSON.parse(guis))
         }
     },
@@ -115,7 +133,9 @@ export const pageBuilderModule = {
         setGuis(state, guis) {
             state.guis = guis
         },
-
+        setPageName(state,pageName){
+          state.pageName = pageName
+        },
         toggleEditPage(state) {
             state.tempGuis = JSON.parse(JSON.stringify(state.guis))
             state.editPage = !state.editPage;
@@ -127,6 +147,13 @@ export const pageBuilderModule = {
         removeComponent(state, {gui, id}) {
             const index = state.guis[gui].findIndex(c => c.id === id)
             state.guis[gui].splice(index, 1)
+        },
+        removeComponentChildGuis(state, id) {
+            for (const gui in state.guis) {
+                if (state.guis.hasOwnProperty(gui) && gui.startsWith(id + '-child-')) {
+                    delete state.guis[gui];
+                }
+            }
         },
         moveComponentUp(state, {gui, id}) {
             const index = state.guis[gui].findIndex(c => c.id === id)

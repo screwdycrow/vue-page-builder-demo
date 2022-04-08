@@ -1,6 +1,7 @@
 
 import {createStore} from "vuex";
 import {pageBuilderModule} from "@/components/PageBuilder/PageBuilderModule";
+import {tasksModule} from "@/components/Tasks/tasksModule";
 
 export const store =  createStore({
     state() {
@@ -8,6 +9,7 @@ export const store =  createStore({
     },
     mutations: {},
     modules:{
-        pageBuilder:pageBuilderModule
+        pageBuilder:pageBuilderModule,
+        tasks:tasksModule
     }
 })

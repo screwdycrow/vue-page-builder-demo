@@ -14,7 +14,8 @@ export default {
 
   computed: {
     ...mapState('pageBuilder', [
-      "editPage"
+      "editPage",
+      "pageName"
     ])
   },
   methods: {

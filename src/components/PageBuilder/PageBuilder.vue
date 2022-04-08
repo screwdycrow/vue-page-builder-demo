@@ -10,7 +10,7 @@
       </v-toolbar>
       <component
           :is="componentTypes[component.type].component"
-          v-bind="component.props">
+          v-bind="{component:component, ...component.props}">
       </component>
     </div>
     <component-form v-if="editPage" :gui="gui"></component-form>
@@ -26,10 +26,11 @@ import {mapGetters, mapMutations, mapState} from "vuex";
 import DataTable from "@/components/DataTable";
 import PageBuilderToolbar from "@/components/PageBuilder/basic/PageBuilderToolbar";
 import PageBuilderColumns from "@/components/PageBuilder/basic/PageBuilderColumns";
+import TaskList from "@/components/Tasks/TaskList";
 
 export default {
   name: "PageBuilder",
-  components: markRaw({PersonCard, ComponentForm, IncomeGraph, DataTable,PageBuilderToolbar, PageBuilderColumns}),
+  components: {PersonCard, ComponentForm, IncomeGraph, DataTable,PageBuilderToolbar, PageBuilderColumns, TaskList},
   props: {
     gui: String
   },
@@ -48,6 +49,7 @@ export default {
   methods: {
     removeComponentClick(id) {
       this.removeComponent({gui: this.gui, id: id})
+      this.removeComponentChildGuis(id);
     },
     moveComponentUpClick(id){
       this.moveComponentUp({gui:this.gui, id:id})
@@ -60,6 +62,7 @@ export default {
       "moveComponentUp",
       "moveComponentDown",
       "removeComponent",
+      "removeComponentChildGuis",
       "initGui"
     ])
   }

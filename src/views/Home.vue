@@ -6,7 +6,7 @@
     </v-app-bar>
     <v-main>
       <v-container >
-        <page-builder gui="home-1"></page-builder>
+        <page-builder gui="home"></page-builder>
       </v-container>
     </v-main>
   </v-app>
@@ -15,7 +15,7 @@
 <script>
 import PersonCard from "@/components/PersonCard";
 import PageBuilder from "@/components/PageBuilder/PageBuilder";
-import {mapMutations, mapState} from "vuex";
+import {mapActions, mapMutations, mapState} from "vuex";
 import ToggleEditPage from "@/components/PageBuilder/ToggleEditPage";
 import IncomeGraph from "@/components/IncomeGraph";
 export default {
@@ -26,9 +26,17 @@ export default {
         "editPage"
     ])
   },
+  created() {
+    this.setPageName('Home')
+    this.getGuis('Home')
+  },
   methods:{
+    ...mapActions('pageBuilder',[
+        'getGuis'
+    ]),
     ...mapMutations('pageBuilder',[
-        "toggleEditPage"
+        "toggleEditPage",
+        "setPageName",
     ])
   }
 }
