@@ -69,11 +69,6 @@ export const pageBuilderModule = {
                 label: 'Columns',
                 description: 'Generates page builders for  multiple columns',
                 props: {
-                    gui: {
-                        type: 'text', label: 'Ονομα', default: 'row', rules: [
-                            (v) => (v !== '' && v !== null) || 'To όνομα απαιτείται'
-                        ]
-                    },
                     cols: {
                         type: 'number', label: 'Στείλες', default: 1, rules: [
                             (v) => (Number(v) > 0 || 'απαιτείτε αριθμός μεγαλύτερος του 0 ')

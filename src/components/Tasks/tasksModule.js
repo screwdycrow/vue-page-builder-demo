@@ -13,7 +13,7 @@ export const tasksModule = {
                     commit('addTask', task)
                     localStorage.setItem('tasks', JSON.stringify(state.tasks))
                     resolve(task)
-                },1500)
+                },100)
             })
         },
         deleteTask({commit, state},id){
@@ -25,7 +25,10 @@ export const tasksModule = {
                 })
             })
         },
-
+        putTask({commit, state}, task){
+            commit('updateTask', task )
+            localStorage.setItem('tasks', JSON.stringify(state.tasks))
+        },
         getTasks({commit}) {
             return new Promise(resolve => {
                 setTimeout(() => {
@@ -39,11 +42,16 @@ export const tasksModule = {
         }
     },
     mutations: {
+        updateTask(state, task) {
+            const index = state.tasks.findIndex(t => t.id === task.id)
+            state.tasks[index] = task;
+        },
         setTasks(state, tasks) {
             state.tasks = tasks;
         },
         addTask(state, task) {
-            state.tasks.push(task)
+            if(state.tasks === null ) state.tasks = []
+            state.tasks.push(Object.assign({},task))
             return task;
         },
         removeTask(state, id) {
@@ -52,5 +60,8 @@ export const tasksModule = {
         }
     },
     getters:{
+        doneTasks: s => s.tasks.filter(t=>t.isDone),
+        pendingTasks: s => s.tasks.filter(t=>!t.isDone),
+        dueTasks: s => s.tasks.filter(t=> new Date(t.deadLine).getTime() < new Date().getTime())
     }
 }

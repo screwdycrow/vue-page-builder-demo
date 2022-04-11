@@ -8,15 +8,17 @@
             flat
             small
             v-bind="props"
-            icon="mdi-plus"
+            :icon="isEditMode?'mdi-pencil':'mdi-plus'"
         >
         </v-btn>
       </template>
       <v-card width="500px" height="auto">
-        <v-card-title> Προσθήκη Κάρτας</v-card-title>
+        <v-card-title v-if="!isEditMode"> Προσθήκη Κάρτας</v-card-title>
+        <v-card-title v-else > Επεξεργασία Κάρτας</v-card-title>
         <v-card-text>
           <v-form v-if="dialog" ref="componentForm" v-model="valid" lazy-validation>
             <v-select
+                v-if='!isEditMode'
                 variant="outlined"
                 density="comfortable"
                 v-model="component.type"
@@ -49,7 +51,7 @@
         </v-card-text>
         <v-card-actions>
           <v-btn v-if="!isEditMode" :disabled="!valid || !component.type" @click="addComponentClick()"> ΠΡΟΣΘΗΚΗ</v-btn>
-          <v-btn v-else :disabled="!valid || !component.type" @click="addComponentClick()"> ΠΡΟΣΘΗΚΗ</v-btn>
+          <v-btn v-else :disabled="!valid || !component.type" @click="updateComponentClick()"> ΑΠΟΘΗΚΕΥΣΗ </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -72,7 +74,7 @@ export default {
   }),
   created() {
     if (this.isEditMode) {
-      this.type = this.componentModel.type;
+      this.component.type = this.componentModel.type;
     }
   },
   props: {
@@ -82,6 +84,9 @@ export default {
   watch: {
     'component.type': function (val) {
       this.componentSelectionChange(val)
+    },
+    componentModel(){
+      this.component.type = this.componentModel.type
     }
   },
   computed: {
@@ -111,7 +116,7 @@ export default {
     },
     updateComponentClick() {
       this.updateComponent({gui: this.gui, props: this.component.props, id: this.componentModel.id})
-    },
+      },
     addComponentClick() {
       this.addComponent({gui: this.gui, type: this.component.type, props: this.component.props})
       this.resetDialog()

@@ -14,7 +14,6 @@ export default {
   props:{
     component:{type:Object},
     cols:{type:Number, required:false, default:1 },
-    gui:{type:String, required:true, default:'row'}
   },
   created() {
   },
