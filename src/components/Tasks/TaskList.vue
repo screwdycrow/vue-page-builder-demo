@@ -7,16 +7,28 @@
 </template>
 
 <script>
-import {mapActions, mapState} from "vuex";
+import {mapActions, mapGetters, mapState} from "vuex";
 import TaskItem from "@/components/Tasks/TaskItem";
 
 export default {
   name: "TaskList",
   components: {TaskItem},
+  props:{
+    mode:{type:String, default:'all'}
+  },
   computed: {
     ...mapState('tasks', [
       "tasks"
     ]),
+    ...mapGetters('tasks', [
+        'doneTasks',
+        'dueTasks',
+        "pendingTasks",
+    ]),
+    taskView(){
+
+    }
+
   },
   created() {
     this.getTasks();
