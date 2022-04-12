@@ -1,11 +1,15 @@
 <template>
   <v-app>
     <v-app-bar app>
+      <v-app-bar-nav-icon @click="navigation =!navigation"></v-app-bar-nav-icon>
       <v-app-bar-title> Test </v-app-bar-title>
     <toggle-edit-page></toggle-edit-page>
     </v-app-bar>
+    <v-navigation-drawer color="grey" width="300" v-model="navigation">
+      <page-builder gui="sidebar"></page-builder>
+    </v-navigation-drawer>
     <v-main>
-      <v-container >
+      <v-container>
         <page-builder gui="home"></page-builder>
       </v-container>
     </v-main>
@@ -20,6 +24,9 @@ import ToggleEditPage from "@/components/PageBuilder/ToggleEditPage";
 import IncomeGraph from "@/components/IncomeGraph";
 export default {
   name: "Home",
+  data:()=>({
+    navigation:true
+  }),
   components: {IncomeGraph, ToggleEditPage, PageBuilder, PersonCard},
   computed:{
     ...mapState('pageBuilder',[

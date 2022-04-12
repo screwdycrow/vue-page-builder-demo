@@ -42,6 +42,7 @@ export const pageBuilderModule = {
                 label: 'Heading',
                 description: 'Heading',
                 props: {
+                    label:{type:'text',label:'Κείμενο'}
                 }
             },
             'PageBuilderColumns': {

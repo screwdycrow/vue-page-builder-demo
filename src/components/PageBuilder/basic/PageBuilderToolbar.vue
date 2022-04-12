@@ -1,6 +1,6 @@
 <template>
-  <v-toolbar color="color" v-if="componentLabel">
-    <v-toolbar-title>{{componentLabel}}</v-toolbar-title>
+  <v-toolbar color="color" v-if="label">
+    <v-toolbar-title>{{label}}</v-toolbar-title>
   </v-toolbar>
 
 </template>
@@ -14,6 +14,7 @@ export default {
   name: "PageBuilderToolbar",
   mixins:[baseStyleMixin],
   props:{
+    label:String,
   }
 }
 </script>
