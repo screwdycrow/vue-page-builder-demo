@@ -62,6 +62,6 @@ export const tasksModule = {
     getters:{
         doneTasks: s => s.tasks.filter(t=>t.isDone),
         pendingTasks: s => s.tasks.filter(t=>!t.isDone),
-        dueTasks: s => s.tasks.filter(t=> new Date(t.deadLine).getTime() < new Date().getTime())
+        overdueTasks: s => s.tasks.filter(t=> t.deadLine && !t.isDone && (new Date(t.deadLine).getTime() < new Date().getTime()))
     }
 }

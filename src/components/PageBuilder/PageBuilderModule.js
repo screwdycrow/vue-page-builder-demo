@@ -2,48 +2,29 @@ import PersonCard from "@/components/PersonCard";
 import {markRaw} from "vue";
 import IncomeGraph from "@/components/IncomeGraph";
 import DataTable from "@/components/DataTable";
-import {basicProps} from "@/components/PageBuilder/BasicProps";
+import {basicProps} from "@/components/PageBuilder/basic/BasicProps";
 import PageBuilderToolbar from "@/components/PageBuilder/basic/PageBuilderToolbar";
 import PageBuilderColumns from "@/components/PageBuilder/basic/PageBuilderColumns";
 import TaskList from "@/components/Tasks/TaskList";
 import AddTask from "@/components/Tasks/AddTask";
+import PageBuilderSpacer from "@/components/PageBuilder/basic/PageBuilderSpacer";
+import {baseStyleProps} from "@/components/PageBuilder/basic/BaseStyleProps";
 
 export const pageBuilderModule = {
     namespaced: true,
     state: () => ({
         editPage: false,
         tempGuis: {},
-        pageName:'gui',
+        pageName: 'gui',
         guis: {
-            'home-row-1': [
-                {
-                    id: '123456',
-                    type: 'PersonCard',
-                    props: {
-                        name: 'Dimitrios Tzilivakis',
-                        color: 'blue'
-                    }
-                },
-                {
-                    id: '123456',
-                    type: 'PersonCard',
-                    props: {
-                        name: 'Dimitrios Tzilivakis',
-                        color: 'blue'
-                    }
-                },
-                {
-                    id: '123456',
-                    type: 'PersonCard',
-                    props: {
-                        name: 'Dimitrios Tzilivakis',
-                        color: 'blue'
-                    }
-                }
-            ]
-
         },
         types: {
+            'PageBuilderSpacer': {
+                component: markRaw(PageBuilderSpacer),
+                label: 'Spacer',
+                description: 'Spacer',
+                props: {space:{type:String, default:'10px'}}
+            },
             'DataTable': {
                 component: markRaw(DataTable),
                 label: 'A Datatable ',
@@ -61,7 +42,6 @@ export const pageBuilderModule = {
                 label: 'Heading',
                 description: 'Heading',
                 props: {
-                    ...basicProps
                 }
             },
             'PageBuilderColumns': {
@@ -69,6 +49,7 @@ export const pageBuilderModule = {
                 label: 'Columns',
                 description: 'Generates page builders for  multiple columns',
                 props: {
+                    ...baseStyleProps,
                     cols: {
                         type: 'number', label: 'Στείλες', default: 1, rules: [
                             (v) => (Number(v) > 0 || 'απαιτείτε αριθμός μεγαλύτερος του 0 ')
@@ -81,9 +62,20 @@ export const pageBuilderModule = {
                 component: markRaw(TaskList),
                 label: 'List with Tasks',
                 description: 'Shows your tasks',
-                props: {}
+                props: {
+                    ...baseStyleProps,
+                    mode:{
+                        type: 'select', label: 'mode', default: 'all', items: [
+                            {value:'all',text:'All Tasks'},
+                            {value:'done',text:'All Done Tasks'},
+                            {value:'pending',text:'All Pending Tasks'},
+                            {value:'overdue',text:'All Overdue Tasks'},
+                        ]
+                    }
+                }
             },
             'AddTask': {
+                ...baseStyleProps,
                 component: markRaw(AddTask),
                 label: 'Add Task',
                 description: 'Add Task Form',
@@ -114,7 +106,7 @@ export const pageBuilderModule = {
             localStorage.setItem(state.pageName, JSON.stringify(state.guis))
             commit('toggleEditPage')
         },
-        getGuis({state, commit},pageName) {
+        getGuis({state, commit}, pageName) {
             const guis = localStorage.getItem(pageName)
             if (guis) commit('setGuis', JSON.parse(guis))
         }
@@ -128,8 +120,8 @@ export const pageBuilderModule = {
         setGuis(state, guis) {
             state.guis = guis
         },
-        setPageName(state,pageName){
-          state.pageName = pageName
+        setPageName(state, pageName) {
+            state.pageName = pageName
         },
         toggleEditPage(state) {
             state.tempGuis = JSON.parse(JSON.stringify(state.guis))

@@ -1,7 +1,7 @@
 <template>
-  <v-card>
+  <v-card :style="styles" :class="classes">
     <v-list>
-      <task-item v-for="task in tasks" :task="task" :key="task.id"></task-item>
+      <task-item v-for="task in taskView" :task="task" :key="task.id"></task-item>
     </v-list>
   </v-card>
 </template>
@@ -9,10 +9,12 @@
 <script>
 import {mapActions, mapGetters, mapState} from "vuex";
 import TaskItem from "@/components/Tasks/TaskItem";
+import baseStyleMixin from "@/components/PageBuilder/basic/BaseStyleMixin";
 
 export default {
   name: "TaskList",
   components: {TaskItem},
+  mixins:[baseStyleMixin],
   props:{
     mode:{type:String, default:'all'}
   },
@@ -22,11 +24,20 @@ export default {
     ]),
     ...mapGetters('tasks', [
         'doneTasks',
-        'dueTasks',
+        'overdueTasks',
         "pendingTasks",
     ]),
     taskView(){
-
+        switch (this.mode){
+          case 'all':
+            return this.tasks
+          case 'done':
+            return this.doneTasks
+          case 'pending':
+            return this.pendingTasks
+          case 'overdue':
+            return this.overdueTasks
+        }
     }
 
   },

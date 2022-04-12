@@ -27,10 +27,11 @@ import DataTable from "@/components/DataTable";
 import PageBuilderToolbar from "@/components/PageBuilder/basic/PageBuilderToolbar";
 import PageBuilderColumns from "@/components/PageBuilder/basic/PageBuilderColumns";
 import TaskList from "@/components/Tasks/TaskList";
+import PageBuilderSpacer from "@/components/PageBuilder/basic/PageBuilderSpacer";
 
 export default {
   name: "PageBuilder",
-  components: {PersonCard, ComponentForm, IncomeGraph, DataTable,PageBuilderToolbar, PageBuilderColumns, TaskList},
+  components: {PersonCard, ComponentForm, IncomeGraph, DataTable,PageBuilderToolbar, PageBuilderColumns, TaskList, PageBuilderSpacer},
   props: {
     gui: String
   },
@@ -71,7 +72,7 @@ export default {
 
 <style scoped>
 .edit {
-  padding: 20px 20px 0px 20px;
+  padding: 10px 10px 0px 10px;
   border: dotted gray 1px;
 
 }

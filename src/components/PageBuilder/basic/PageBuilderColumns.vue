@@ -1,5 +1,5 @@
 <template>
-  <v-row class="pt-4">
+  <v-row :style="styles" :class="classes">
     <v-col v-for="index in Number(cols)" :key="index">
       <page-builder :gui="component.id+'-child-'+index"></page-builder>
     </v-col>
@@ -9,8 +9,10 @@
 <script>
 
 import {mapMutations} from "vuex";
+import baseStyleMixin from "@/components/PageBuilder/basic/BaseStyleMixin";
 export default {
   name: "PageBuilderColumns",
+  mixins:[baseStyleMixin],
   props:{
     component:{type:Object},
     cols:{type:Number, required:false, default:1 },

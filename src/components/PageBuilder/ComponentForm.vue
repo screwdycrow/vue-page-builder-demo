@@ -14,7 +14,7 @@
       </template>
       <v-card width="500px" height="auto">
         <v-card-title v-if="!isEditMode"> Προσθήκη Κάρτας</v-card-title>
-        <v-card-title v-else > Επεξεργασία Κάρτας</v-card-title>
+        <v-card-title v-else> Επεξεργασία Κάρτας</v-card-title>
         <v-card-text>
           <v-form v-if="dialog" ref="componentForm" v-model="valid" lazy-validation>
             <v-select
@@ -36,22 +36,31 @@
                 </v-list-item>
               </template>
             </v-select>
-            <v-text-field v-if="component.props !== null "
-                          v-for="(item, key ) in selectedComponentProps"
-                          variant="outlined"
-                          density="comfortable"
-                          :type="item.type"
-                          :label="item.label"
-                          :rules="item.rules"
-                          @focusout="validate()"
-                          v-model="component.props[key]">
+            <div v-if="component.props !== null"
+                 v-for="(item, key ) in selectedComponentProps">
+              <v-text-field
+                  v-if="item.type!== 'select'"
+                  variant="outlined"
+                  density="comfortable"
+                  :type="item.type"
+                  :label="item.label"
+                  :rules="item.rules"
+                  @focusout="validate()"
+                  v-model="component.props[key]">
 
-            </v-text-field>
+              </v-text-field>
+              <select v-if="item.type === 'select'" v-model="component.props[key]">
+                <option v-for="option in item.items" v-bind:value="option.value" >
+                  {{ option.text }}
+                </option>
+              </select>
+            </div>
+
           </v-form>
         </v-card-text>
         <v-card-actions>
           <v-btn v-if="!isEditMode" :disabled="!valid || !component.type" @click="addComponentClick()"> ΠΡΟΣΘΗΚΗ</v-btn>
-          <v-btn v-else :disabled="!valid || !component.type" @click="updateComponentClick()"> ΑΠΟΘΗΚΕΥΣΗ </v-btn>
+          <v-btn v-else :disabled="!valid || !component.type" @click="updateComponentClick()"> ΑΠΟΘΗΚΕΥΣΗ</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -85,7 +94,7 @@ export default {
     'component.type': function (val) {
       this.componentSelectionChange(val)
     },
-    componentModel(){
+    componentModel() {
       this.component.type = this.componentModel.type
     }
   },
@@ -116,7 +125,7 @@ export default {
     },
     updateComponentClick() {
       this.updateComponent({gui: this.gui, props: this.component.props, id: this.componentModel.id})
-      },
+    },
     addComponentClick() {
       this.addComponent({gui: this.gui, type: this.component.type, props: this.component.props})
       this.resetDialog()
