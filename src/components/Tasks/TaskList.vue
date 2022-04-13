@@ -9,7 +9,7 @@
 <script>
 import {mapActions, mapGetters, mapState} from "vuex";
 import TaskItem from "@/components/Tasks/TaskItem";
-import baseStyleMixin from "@/components/PageBuilder/basic/BaseStyleMixin";
+import baseStyleMixin from "@/vuepagebuilder/components/BaseStyleMixin";
 
 export default {
   name: "TaskList",

@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import baseStyleMixin from "@/components/PageBuilder/basic/BaseStyleMixin";
+import baseStyleMixin from "@/vuepagebuilder/components/BaseStyleMixin";
 
 export default {
   name: "BaseWrapper",

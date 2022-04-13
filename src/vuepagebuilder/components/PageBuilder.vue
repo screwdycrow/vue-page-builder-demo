@@ -19,15 +19,15 @@
 
 <script>
 import {markRaw} from "vue";
-import ComponentForm  from "@/components/PageBuilder/ComponentForm";
+import ComponentForm  from "@/vuepagebuilder/components/ComponentForm";
 import PersonCard from "@/components/PersonCard";
 import IncomeGraph from "@/components/IncomeGraph";
 import {mapGetters, mapMutations, mapState} from "vuex";
 import DataTable from "@/components/DataTable";
-import PageBuilderToolbar from "@/components/PageBuilder/basic/PageBuilderToolbar";
-import PageBuilderColumns from "@/components/PageBuilder/basic/PageBuilderColumns";
+import PageBuilderToolbar from "@/vuepagebuilder/components/PageBuilderToolbar";
+import PageBuilderColumns from "@/vuepagebuilder/components/PageBuilderColumns";
 import TaskList from "@/components/Tasks/TaskList";
-import PageBuilderSpacer from "@/components/PageBuilder/basic/PageBuilderSpacer";
+import PageBuilderSpacer from "@/vuepagebuilder/components/PageBuilderSpacer";
 
 export default {
   name: "PageBuilder",

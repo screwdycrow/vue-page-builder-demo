@@ -5,8 +5,8 @@ import vuetify from './plugins/vuetify'
 import {loadFonts} from './plugins/webfontloader'
 import {store} from "@/store";
 import VueApexCharts from "vue3-apexcharts";
-import PageBuilder from "@/components/PageBuilder/PageBuilder";
-
+import PageBuilder from "@/vuepagebuilder/components/PageBuilder";
+import vuepagebuilder from "@/plugins/vuepagebuilder";
 
 loadFonts()
 
@@ -14,6 +14,9 @@ loadFonts()
 const app = createApp(App)
     .use(vuetify)
     .use(store)
+    .use(vuepagebuilder, {
+        store
+    })
     .use(VueApexCharts)
     .component('PageBuilder',PageBuilder)
     .mount('#app')

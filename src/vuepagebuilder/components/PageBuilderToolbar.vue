@@ -6,9 +6,9 @@
 </template>
 
 <script>
-import {basicProps} from "@/components/PageBuilder/basic/BasicProps";
-import basicComponentPropsMixin from "@/components/PageBuilder/basic/BasicComponentPropsMixin";
-import baseStyleMixin from "@/components/PageBuilder/basic/BaseStyleMixin";
+import {basicProps} from "@/vuepagebuilder/props/BasicProps";
+import basicComponentPropsMixin from "@/vuepagebuilder/components/BasicComponentPropsMixin";
+import baseStyleMixin from "@/vuepagebuilder/components/BaseStyleMixin";
 
 export default {
   name: "PageBuilderToolbar",

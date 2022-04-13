@@ -18,9 +18,9 @@
 
 <script>
 import PersonCard from "@/components/PersonCard";
-import PageBuilder from "@/components/PageBuilder/PageBuilder";
+import PageBuilder from "@/vuepagebuilder/components/PageBuilder";
 import {mapActions, mapMutations, mapState} from "vuex";
-import ToggleEditPage from "@/components/PageBuilder/ToggleEditPage";
+import ToggleEditPage from "@/vuepagebuilder/components/ToggleEditPage";
 import IncomeGraph from "@/components/IncomeGraph";
 export default {
   name: "Home",
