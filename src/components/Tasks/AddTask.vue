@@ -16,18 +16,11 @@
 <script>
 import Task from "@/components/Tasks/Task";
 import {mapActions} from "vuex";
+import AddTaskMixin from "@/components/Tasks/AddTaskMixin";
 
 export default {
   name: "AddTask",
-  data:()=>({
-    task: new Task()
-  }),
-  methods:{
-    ...mapActions('tasks',[
-        "postTask"
-    ])
-  }
-
+  mixins:[AddTaskMixin]
 }
 </script>
 

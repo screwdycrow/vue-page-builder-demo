@@ -4,7 +4,7 @@ import PageBuilderSpacer from "@/vuepagebuilder/components/PageBuilderSpacer";
 import DataTable from "@/components/DataTable";
 import IncomeGraph from "@/components/IncomeGraph";
 import {basicProps} from "@/vuepagebuilder/props/BasicProps";
-import PageBuilderToolbar from "@/vuepagebuilder/components/PageBuilderToolbar";
+import PageBuilderToolbar from "@/components/PageBuilderToolbar";
 import PageBuilderColumns from "@/vuepagebuilder/components/PageBuilderColumns";
 import {baseStyleProps} from "@/vuepagebuilder/props/BaseStyleProps";
 import TaskList from "@/components/Tasks/TaskList";
@@ -14,24 +14,28 @@ import {markRaw} from "vue";
 
 export default createPageBuilder({
         'PageBuilderSpacer': {
+            isGlobal:true,
             component: markRaw(PageBuilderSpacer),
             label: 'Spacer',
             description: 'Spacer',
             props: {space: {type: String, default: '10px'}}
         },
         'DataTable': {
+            isGlobal:true,
             component: markRaw(DataTable),
             label: 'A Datatable ',
             description: 'Shows rows and items',
             props: {}
         },
         'IncomeGraph': {
+            isGlobal:true,
             component: markRaw(IncomeGraph),
             label: 'An Income Graph ',
             description: 'Shows details of Income per Branch',
             props: {...basicProps}
         },
         'PageBuilderToolbar': {
+            isGlobal:true,
             component: markRaw(PageBuilderToolbar),
             label: 'Heading',
             description: 'Heading',
@@ -40,6 +44,7 @@ export default createPageBuilder({
             }
         },
         'PageBuilderColumns': {
+            isGlobal:true,
             component: markRaw(PageBuilderColumns),
             label: 'Columns',
             description: 'Generates page builders for  multiple columns',
@@ -54,6 +59,7 @@ export default createPageBuilder({
         },
 
         'TaskList': {
+            isGlobal:true,
             component: markRaw(TaskList),
             label: 'List with Tasks',
             description: 'Shows your tasks',

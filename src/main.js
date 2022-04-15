@@ -5,18 +5,15 @@ import vuetify from './plugins/vuetify'
 import {loadFonts} from './plugins/webfontloader'
 import {store} from "@/store";
 import VueApexCharts from "vue3-apexcharts";
-import PageBuilder from "@/vuepagebuilder/components/PageBuilder";
-import vuepagebuilder from "@/plugins/vuepagebuilder";
-
+import VuePageBuilder from "@/plugins/vuepagebuilder";
+import router from './router'
 loadFonts()
+import 'bulma/css/bulma.min.css'
 
-
-const app = createApp(App)
+const app = createApp(App).use(router)
     .use(vuetify)
     .use(store)
-    .use(vuepagebuilder, {
-        store
-    })
+    .use(VuePageBuilder, {store})
     .use(VueApexCharts)
-    .component('PageBuilder',PageBuilder)
     .mount('#app')
+

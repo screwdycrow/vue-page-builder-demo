@@ -3,7 +3,7 @@ import {markRaw} from "vue";
 import IncomeGraph from "@/components/IncomeGraph";
 import DataTable from "@/components/DataTable";
 import {basicProps} from "@/vuepagebuilder/props/BasicProps";
-import PageBuilderToolbar from "@/vuepagebuilder/components/PageBuilderToolbar";
+import PageBuilderToolbar from "@/components/PageBuilderToolbar";
 import PageBuilderColumns from "@/vuepagebuilder/components/PageBuilderColumns";
 import TaskList from "@/components/Tasks/TaskList";
 import AddTask from "@/components/Tasks/AddTask";
@@ -19,17 +19,17 @@ export const pageBuilderModule = {
         guis: {
         },
         types: {
-
         },
     }),
 
     actions: {
-        saveGuis({state, commit},) {
+
+        saveGuis({state, commit}) {
             localStorage.setItem(state.pageName, JSON.stringify(state.guis))
             commit('toggleEditPage')
         },
-        getGuis({state, commit}, pageName) {
-            const guis = localStorage.getItem(pageName)
+        getGuis({state, commit}) {
+            const guis = localStorage.getItem(state.pageName)
             if (guis) commit('setGuis', JSON.parse(guis))
         }
     },

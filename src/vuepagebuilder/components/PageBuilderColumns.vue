@@ -1,9 +1,9 @@
 <template>
-  <v-row :style="styles" :class="classes">
-    <v-col v-for="index in Number(cols)" :key="index">
+  <div :style="styles" class='columns' :class="classes">
+    <div class="column" v-for="index in Number(cols)" :key="index">
       <page-builder :gui="component.id+'-child-'+index"></page-builder>
-    </v-col>
-  </v-row>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -20,9 +20,6 @@ export default {
   created() {
   },
   methods:{
-   ...mapMutations('pageBuilder',[
-       "initGui"
-   ])
   }
 
 }

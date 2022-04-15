@@ -20,19 +20,12 @@
 <script>
 import Task from "@/components/Tasks/Task";
 import {mapActions} from "vuex";
+import taskItemMixin from "@/components/Tasks/TaskItemMixin";
 
 export default {
   name: "TaskItem",
-  props:{task: Task},
-  methods:{
-    toggleDone(){
-      this.task.isDone = !this.task.isDone;
-      this.putTask(this.task);
-    },
-    ...mapActions('tasks',[
-        "putTask"
-    ])
-  }
+  mixins:[taskItemMixin]
+
 }
 </script>
 
