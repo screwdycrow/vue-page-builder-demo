@@ -46,7 +46,7 @@ export const pagesModule = {
             name: p.name,
             path: p.path,
             component: PageBuilderPage,
-            props: {pageName: p.name}
+            props: {page: p.name}
         }))
     }
 }

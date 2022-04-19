@@ -5,6 +5,7 @@ export const pageBuilderModule = {
         editPage: false,
         tempGuis: {},
         pageName: 'gui',
+        loadingGuis:false,
         guis: {},
         types: {},
     }),
@@ -12,13 +13,23 @@ export const pageBuilderModule = {
     actions: {
 
         saveGuis({state, commit}) {
-            localStorage.setItem(state.pageName, JSON.stringify(state.guis))
-            commit('toggleEditPage')
+            commit('setLoading',true)
+            return new Promise(resolve=>{
+                commit('setLoading',false)
+                localStorage.setItem(state.pageName, JSON.stringify(state.guis))
+                commit('toggleEditPage')
+                resolve(true)
+            })
         },
         getGuis({state, commit}) {
-            commit('clearGuis');
-            const guis = localStorage.getItem(state.pageName)
-            if (guis) commit('setGuis', JSON.parse(guis))
+            commit('setLoading',true)
+            return new Promise(resolve => {
+                commit('clearGuis');
+                const guis = localStorage.getItem(state.pageName)
+                if (guis) commit('setGuis', JSON.parse(guis))
+                commit('setLoading',false)
+                resolve(true)
+            })
         }
     },
     mutations: {
@@ -39,7 +50,9 @@ export const pageBuilderModule = {
         setPageName(state, pageName) {
             state.pageName = pageName
         },
-
+        setLoading(state,value){
+          state.loadingGuis = value
+        },
         toggleEditPage(state) {
             state.tempGuis = JSON.parse(JSON.stringify(state.guis))
             state.editPage = !state.editPage;

@@ -7,7 +7,6 @@
       <global-toggle-edit-page></global-toggle-edit-page>
     </v-app-bar>
     <v-navigation-drawer color="#EAEAEAFF" width="300" v-model="navigation">
-      <global-page-builder class="mt-3" gui="sidebar"></global-page-builder>
       <v-list dense nav>
         <v-list-item link to="/">
           <v-list-item-content>
@@ -21,6 +20,7 @@
         </v-list-item>
 
       </v-list>
+      <global-page-builder class="mt-3" gui="sidebar"></global-page-builder>
     </v-navigation-drawer>
     <v-main>
       <v-container>

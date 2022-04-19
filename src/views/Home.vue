@@ -1,5 +1,5 @@
 <template>
-<page-builder gui="Home"></page-builder>
+<page-builder v-if="!loadingGuis" gui="Home"></page-builder>
 </template>
 
 <script>
@@ -11,6 +11,11 @@ export default {
   created() {
     this.setPageName('Home')
     this.getGuis()
+  },
+  computed:{
+    ...mapState("pageBuilder",[
+        "loadingGuis"
+    ])
   },
   methods:{
     ...mapActions('pageBuilder',[

@@ -1,5 +1,5 @@
 <template>
-  <page-builder :gui="'main-'+pageName"></page-builder>
+  <page-builder :key="hardReset" v-if="!loadingGuis" :gui="'main'"></page-builder>
 </template>
 
 <script>
@@ -9,28 +9,34 @@ import PageBuilder from "@/vuepagebuilder/components/core/PageBuilder";
 export default {
   name: "PageBuilderPage",
   components: {PageBuilder},
+  data:()=>({
+    hardReset:0,
+  }),
   props: {
-    pageName: String
+    page: String
   },
-  beforeRouteUpdate(to, from, next) {
-    this.setPageName(to.name)
-    this.getGuis()
-    next()
-  },
-  updated() {
-    this.setPageName(this.pageName)
-    this.getGuis()
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.setPageName(to.name)
+      vm.getGuis()
+      vm.resetPageBuilders();
+    })
   },
   computed: {
     ...mapState('pageBuilder', [
-      "pageName"
+      "pageName",
+      "loadingGuis"
     ])
   },
   methods: {
+    resetPageBuilders(){
+      this.hardReset++
+    },
     ...mapActions('pageBuilder', [
       'getGuis'
     ]),
     ...mapMutations('pageBuilder', [
+      "initGui",
       'setPageName'
     ])
   }
