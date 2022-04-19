@@ -1,14 +1,3 @@
-import PersonCard from "@/components/PersonCard";
-import {markRaw} from "vue";
-import IncomeGraph from "@/components/IncomeGraph";
-import DataTable from "@/components/DataTable";
-import {basicProps} from "@/vuepagebuilder/props/BasicProps";
-import PageBuilderToolbar from "@/components/PageBuilderToolbar";
-import PageBuilderColumns from "@/vuepagebuilder/components/PageBuilderColumns";
-import TaskList from "@/components/Tasks/TaskList";
-import AddTask from "@/components/Tasks/AddTask";
-import PageBuilderSpacer from "@/vuepagebuilder/components/PageBuilderSpacer";
-import {baseStyleProps} from "@/vuepagebuilder/props/BaseStyleProps";
 
 export const pageBuilderModule = {
     namespaced: true,
@@ -16,10 +5,8 @@ export const pageBuilderModule = {
         editPage: false,
         tempGuis: {},
         pageName: 'gui',
-        guis: {
-        },
-        types: {
-        },
+        guis: {},
+        types: {},
     }),
 
     actions: {
@@ -29,6 +16,7 @@ export const pageBuilderModule = {
             commit('toggleEditPage')
         },
         getGuis({state, commit}) {
+            commit('clearGuis');
             const guis = localStorage.getItem(state.pageName)
             if (guis) commit('setGuis', JSON.parse(guis))
         }
@@ -39,6 +27,9 @@ export const pageBuilderModule = {
                 state.guis[gui] = []
             }
         },
+        clearGuis(state){
+         state.guis = {};
+        },
         setTypes(state,types){
           state.types = types;
         },
@@ -48,6 +39,7 @@ export const pageBuilderModule = {
         setPageName(state, pageName) {
             state.pageName = pageName
         },
+
         toggleEditPage(state) {
             state.tempGuis = JSON.parse(JSON.stringify(state.guis))
             state.editPage = !state.editPage;
@@ -62,7 +54,7 @@ export const pageBuilderModule = {
         },
         removeComponentChildGuis(state, id) {
             for (const gui in state.guis) {
-                if (state.guis.hasOwnProperty(gui) && gui.startsWith(id + '-child-')) {
+                if (gui.startsWith(id + '-child-')) {
                     delete state.guis[gui];
                 }
             }

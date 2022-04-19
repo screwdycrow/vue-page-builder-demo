@@ -14,9 +14,10 @@ export default {
     ])
   },
 
-  methods:{
+  methods: {
     ...mapActions('pageBuilderGlobals', [
-      'saveGuis'
+      'saveGuis',
+      "getGuis"
     ]),
     ...mapMutations('pageBuilderGlobals', [
       "toggleEditPage",

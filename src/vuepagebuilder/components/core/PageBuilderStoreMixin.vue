@@ -13,9 +13,10 @@ export default {
       "componentTypes",
     ])
   },
-  methods:{
+  methods: {
     ...mapActions('pageBuilder', [
-      'saveGuis'
+      'saveGuis',
+      'getGuis'
     ]),
     ...mapMutations('pageBuilder', [
       "toggleEditPage",

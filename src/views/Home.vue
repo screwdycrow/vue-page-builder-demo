@@ -10,7 +10,7 @@ export default {
   components: {PageBuilder},
   created() {
     this.setPageName('Home')
-    this.getGuis('Home')
+    this.getGuis()
   },
   methods:{
     ...mapActions('pageBuilder',[

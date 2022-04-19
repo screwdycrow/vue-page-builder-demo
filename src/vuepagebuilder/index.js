@@ -8,6 +8,10 @@ import PageBuilderSideTools from "@/vuepagebuilder/components/core/PageBuilderSi
 import ToggleEditPage from "@/vuepagebuilder/components/core/ToggleEditPage";
 import GlobalPageBuilder from "@/vuepagebuilder/components/core/GlobalPageBuilder";
 import GlobalToggleEditPage from "@/vuepagebuilder/components/core/GlobalToggleEditPage";
+import {pagesModule} from "@/vuepagebuilder/modules/PagesModule";
+import router from "@/router";
+import PageBuilderPage from "@/vuepagebuilder/components/PageBuilderPage";
+import PageForm from "@/vuepagebuilder/components/core/PageForm";
 
 /**
  * @desc Creates an object instance of the plugin with its required store module components.
@@ -16,7 +20,7 @@ import GlobalToggleEditPage from "@/vuepagebuilder/components/core/GlobalToggleE
  */
 export function createPageBuilder(componentTypes) {
     return {
-        install: (app, {store}) => {
+        install: (app, {store,router}) => {
             app.component('PageBuilder', PageBuilder)
             app.component('PageBuilderToolbar', PageBuilderToolbar)
             app.component('PageBuilderColumns', PageBuilderColumns)
@@ -26,9 +30,16 @@ export function createPageBuilder(componentTypes) {
             app.component('ComponentForm', ComponentForm)
             app.component('GlobalPageBuilder', GlobalPageBuilder)
             app.component('GlobalToggleEditPage', GlobalToggleEditPage)
+            app.component('PageBuilderPage',PageBuilderPage)
+            app.component('PageForm',PageForm)
             registerComponents(app, componentTypes)
             store.registerModule('pageBuilder', pageBuilderModule)
             store.registerModule('pageBuilderGlobals', pageBuilderModule)
+            store.registerModule('pageBuilderPages',pagesModule)
+            store.dispatch('pageBuilderPages/getPages').then(()=>{
+                const pages = store.getters['pageBuilderPages/routePages']
+                pages.forEach(p=>router.addRoute(p))
+            })
             store.commit('pageBuilderGlobals/setPageName', 'GLOBALS')
             store.commit('pageBuilder/setTypes', componentTypes)
             store.commit('pageBuilderGlobals/setTypes', getGlobalComponentTypes(componentTypes))

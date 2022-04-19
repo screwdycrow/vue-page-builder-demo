@@ -16,7 +16,7 @@
         </v-list-item>
         <v-list-item link to="second">
           <v-list-item-content>
-            <v-list-item-title> Second Page</v-list-item-title>
+            <v-list-item-title> Manage Pages </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
