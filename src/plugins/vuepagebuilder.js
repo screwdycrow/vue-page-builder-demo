@@ -13,6 +13,7 @@ import PersonCard from "@/components/PersonCard";
 import {markRaw} from "vue";
 import PageBuilderPagesList from "@/components/PageBuilder/PageBuilderPagesList";
 import PageForm from "@/vuepagebuilder/components/core/PageForm";
+import NumberBadge from "@/components/PageBuilder/NumberBadge";
 
 export default createPageBuilder({
     'PageBuilderSpacer': {
@@ -91,6 +92,25 @@ export default createPageBuilder({
         label: 'List of custom pages',
         description:'shows a list of custom pages',
         props: {
+            group:{
+                type:'Text', label:'Group', default:''
+            },
+            ...baseStyleProps,
+        }
+    },
+
+    'NumberBadge': {
+        isGlobal:true,
+        component: markRaw(NumberBadge),
+        label: 'A Badge showing the length of an array ',
+        description:'shows a list of custom pages',
+        props: {
+            label:{
+                type:'text', label:'Label', default:''
+            },
+            bind:{
+                type:'text', label:'Binding Source',default:''
+            },
             ...baseStyleProps,
         }
     },
