@@ -14,6 +14,10 @@ import {markRaw} from "vue";
 import PageBuilderPagesList from "@/components/PageBuilder/PageBuilderPagesList";
 import PageForm from "@/vuepagebuilder/components/core/PageForm";
 import NumberBadge from "@/components/PageBuilder/NumberBadge";
+import PageListEditor from "@/vuepagebuilder/components/core/PageListEditor";
+import NumberShowcase from "@/components/PageBuilder/NumberShowcase";
+import {VBtn} from "vuetify/lib/components";
+import PageBuilderButton from "@/components/PageBuilder/PageBuilderButton";
 
 export default createPageBuilder({
     'PageBuilderSpacer': {
@@ -87,40 +91,74 @@ export default createPageBuilder({
         }
     },
     'PageBuilderPagesList': {
-        isGlobal:true,
+        isGlobal: true,
         component: markRaw(PageBuilderPagesList),
         label: 'List of custom pages',
-        description:'shows a list of custom pages',
+        description: 'shows a list of custom pages',
         props: {
-            group:{
-                type:'Text', label:'Group', default:''
+            group: {
+                type: 'Text', label: 'Group', default: ''
             },
             ...baseStyleProps,
         }
     },
 
     'NumberBadge': {
-        isGlobal:true,
+        isGlobal: true,
         component: markRaw(NumberBadge),
         label: 'A Badge showing the length of an array ',
-        description:'shows a list of custom pages',
+        description: 'shows a list of custom pages',
         props: {
-            label:{
-                type:'text', label:'Label', default:''
+            label: {
+                type: 'text', label: 'Label', default: ''
             },
-            bind:{
-                type:'text', label:'Binding Source',default:''
+            bind: {
+                type: 'text', label: 'Binding Source', default: ''
             },
             ...baseStyleProps,
         }
     },
-    'PageForm': {
-        isGlobal:true,
-        component: markRaw(PageForm),
-        label: 'Add Custom Page',
-        description:'Adds Custom Page to Page Builder',
+    'NumberShowcase': {
+        isGlobal: true,
+        component: markRaw(NumberShowcase),
+        label: 'Showcase Number',
+        description: 'shows a list of custom pages',
+        props: {
+            label: {
+                type: 'text', label: 'Label', default: ''
+            },
+            bind: {
+                type: 'text', label: 'Binding Source', default: ''
+            },
+            ...baseStyleProps,
+        }
+    },
+    'PageListEditor': {
+        isGlobal: true,
+        component: markRaw(PageListEditor),
+        label: 'Manage Pages',
+        description: 'Delete/Edit Pages',
         props: {
             ...baseStyleProps,
+        }
+    },
+    'PageForm': {
+        isGlobal: true,
+        component: markRaw(PageForm),
+        label: 'Add Custom Page',
+        description: 'Adds Custom Page to Page Builder',
+        props: {
+            ...baseStyleProps,
+        }
+    },
+    'PageBuilderButton': {
+        component: markRaw(PageBuilderButton),
+        label: 'Button',
+        props:{
+            ...baseStyleProps,
+            to:{type:'text', label:'διαδρομή'},
+            color:{type:'color', label:'Χρώμα', default:''},
+            label:{type:'text', label:'Κείμενο', default:'button'}
         }
     },
     'PersonCard': {

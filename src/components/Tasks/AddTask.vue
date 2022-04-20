@@ -14,9 +14,7 @@
 </template>
 
 <script>
-import Task from "@/components/Tasks/Task";
-import {mapActions} from "vuex";
-import AddTaskMixin from "@/components/Tasks/AddTaskMixin";
+import AddTaskMixin from "./AddTaskMixin";
 
 export default {
   name: "AddTask",

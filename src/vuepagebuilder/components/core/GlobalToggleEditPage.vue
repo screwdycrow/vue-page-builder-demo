@@ -7,10 +7,10 @@
 </template>
 
 <script>
-import globalPageBuilderStoreMixin from "@/vuepagebuilder/components/core/GlobalPageBuilderStoreMixin";
-import editIcon from "@/vuepagebuilder/assets/icons/edit_black_24dp.svg";
-import saveIcon from "@/vuepagebuilder/assets/icons/save_black_24dp.svg";
-import cancelIcon from "@/vuepagebuilder/assets/icons/clear_black_24dp.svg";
+import globalPageBuilderStoreMixin from "./GlobalPageBuilderStoreMixin";
+import editIcon from "../../assets/icons/edit_black_24dp.svg";
+import saveIcon from "../../assets/icons/save_black_24dp.svg";
+import cancelIcon from "../../assets/icons/clear_black_24dp.svg";
 
 export default {
   name: "GlobalToggleEditPage",

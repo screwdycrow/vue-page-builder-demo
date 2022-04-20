@@ -1,7 +1,6 @@
 import {pageBuilderModule} from "@/vuepagebuilder/modules/PageBuilderModule";
 import ComponentForm from "@/vuepagebuilder/components/core/ComponentForm";
 import PageBuilderToolbar from "@/components/PageBuilderToolbar";
-import PageBuilderColumns from "@/vuepagebuilder/components/PageBuilderColumns";
 import PageBuilderSpacer from "@/vuepagebuilder/components/PageBuilderSpacer";
 import PageBuilder from "@/vuepagebuilder/components/core/PageBuilder";
 import PageBuilderSideTools from "@/vuepagebuilder/components/core/PageBuilderSideTools";
@@ -9,9 +8,9 @@ import ToggleEditPage from "@/vuepagebuilder/components/core/ToggleEditPage";
 import GlobalPageBuilder from "@/vuepagebuilder/components/core/GlobalPageBuilder";
 import GlobalToggleEditPage from "@/vuepagebuilder/components/core/GlobalToggleEditPage";
 import {pagesModule} from "@/vuepagebuilder/modules/PagesModule";
-import router from "@/router";
-import PageBuilderPage from "@/vuepagebuilder/components/PageBuilderPage";
+import PageBuilderPage from "@/vuepagebuilder/components/core/PageBuilderPage";
 import PageForm from "@/vuepagebuilder/components/core/PageForm";
+import PageListEditor from "@/vuepagebuilder/components/core/PageListEditor";
 
 /**
  * @desc Creates an object instance of the plugin with its required store module components.
@@ -23,7 +22,6 @@ export function createPageBuilder(componentTypes) {
         install: (app, {store,router}) => {
             app.component('PageBuilder', PageBuilder)
             app.component('PageBuilderToolbar', PageBuilderToolbar)
-            app.component('PageBuilderColumns', PageBuilderColumns)
             app.component('PageBuilderSpacer', PageBuilderSpacer)
             app.component('PageBuilderToggleEdit', ToggleEditPage)
             app.component('PageBuilderSideTools', PageBuilderSideTools)
@@ -31,6 +29,7 @@ export function createPageBuilder(componentTypes) {
             app.component('GlobalPageBuilder', GlobalPageBuilder)
             app.component('GlobalToggleEditPage', GlobalToggleEditPage)
             app.component('PageBuilderPage',PageBuilderPage)
+            app.component('PageListEditor',PageListEditor)
             app.component('PageForm',PageForm)
             registerComponents(app, componentTypes)
             store.registerModule('pageBuilder', pageBuilderModule)

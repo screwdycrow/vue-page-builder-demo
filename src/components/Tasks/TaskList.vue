@@ -7,8 +7,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters, mapState} from "vuex";
-import TaskItem from "@/components/Tasks/TaskItem";
+
 import baseStyleMixin from "@/vuepagebuilder/components/BaseStyleMixin";
 import TaskListMixin from "@/components/Tasks/TaskListMixin";
 

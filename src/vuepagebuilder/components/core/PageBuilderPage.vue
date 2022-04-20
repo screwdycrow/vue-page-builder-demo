@@ -17,7 +17,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      vm.setPageName(to.name)
+      vm.setPageName(to.path)
       vm.getGuis()
       vm.resetPageBuilders();
     })
